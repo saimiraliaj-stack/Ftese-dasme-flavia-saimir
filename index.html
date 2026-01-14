@@ -45,13 +45,11 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      /* Try to suppress default controls overlay as much as possible */
       -webkit-user-select: none;
       user-select: none;
       -webkit-touch-callout: none;
       touch-action: manipulation;
     }
-    /* Hide the fullscreen / download buttons in some browsers (best-effort) */
     video::-webkit-media-controls { display:none !important; }
     video::-webkit-media-controls-panel { display:none !important; }
     video::-webkit-media-controls-play-button { display:none !important; }
@@ -162,10 +160,118 @@
       margin: 18px auto 18px auto;
     }
 
+    /* Cake video */
+    .cakeWrap {
+      margin: 6px auto 14px auto;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.55);
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    }
+    .cakeVideo {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #000;
+    }
+    .cakeNote {
+      padding: 10px 12px;
+      font-size: 12px;
+      color: rgba(0,0,0,.62);
+    }
+
+    /* Countdown */
+    .countdown {
+      margin: 14px auto 10px auto;
+      max-width: 680px;
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(0,0,0,.06);
+      text-align: center;
+    }
+    .countLabel {
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.55);
+      margin-bottom: 10px;
+    }
+    .countGrid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .countBox {
+      border-radius: 16px;
+      padding: 12px 10px;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(0,0,0,.06);
+    }
+    .countNum {
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1;
+      color: rgba(0,0,0,.82);
+    }
+    .countTxt {
+      margin-top: 6px;
+      font-size: 11px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.58);
+    }
+    .countDone {
+      font-size: 14px;
+      color: rgba(0,0,0,.72);
+      display: none;
+      margin-top: 6px;
+    }
+
+    /* Map preview */
+    .mapWrap {
+      margin: 14px auto 6px auto;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.55);
+    }
+    .mapHead {
+      padding: 12px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .mapTitle {
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.55);
+      margin: 0;
+    }
+    .mapLink {
+      font-size: 12px;
+      color: rgba(0,0,0,.72);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,0,0,.22);
+    }
+    .mapLink:hover { opacity: .85; }
+    .mapFrame {
+      width: 100%;
+      height: 320px;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
     .info {
       display: grid;
       gap: 12px;
-      margin: 0 auto 22px auto;
+      margin: 18px auto 22px auto;
       max-width: 620px;
     }
 
@@ -235,6 +341,10 @@
       color: rgba(0,0,0,.58);
     }
 
+    @media (max-width: 520px) {
+      .countGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .mapFrame { height: 280px; }
+    }
     @media (max-width: 420px) {
       .card { padding: 26px 16px; }
       .row { padding: 12px 12px; }
@@ -244,7 +354,7 @@
 
 <body>
 
-  <!-- INTRO VIDEO (no "Saltar", no native controls shown intentionally) -->
+  <!-- INTRO VIDEO -->
   <div id="intro" class="intro">
     <video
       id="introVideo"
@@ -257,7 +367,6 @@
       disablepictureinpicture
     ></video>
 
-    <!-- Tap to start (so it doesn't show play overlay button) -->
     <div id="tapLayer" class="tapLayer" aria-label="Luaj videon">
       <div class="tapHint">Prek për të vazhduar</div>
     </div>
@@ -272,7 +381,66 @@
         <p class="kicker">Ftesë Dasme</p>
         <h1>Flavia &amp; Saimir</h1>
 
-        <p class="subtitle">
+        <!-- Cake video (plays right after intro ends) -->
+        <div class="cakeWrap">
+          <video
+            id="cakeVideo"
+            class="cakeVideo"
+            src="cake.mp4"
+            playsinline
+            preload="auto"
+            muted
+            loop
+          ></video>
+          <div class="cakeNote">Nëse nuk luan automatikisht, prek videon.</div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown" aria-live="polite">
+          <div class="countLabel">Numërim mbrapsht deri në dasmë</div>
+          <div id="countGrid" class="countGrid">
+            <div class="countBox">
+              <div id="cdDays" class="countNum">—</div>
+              <div class="countTxt">Ditë</div>
+            </div>
+            <div class="countBox">
+              <div id="cdHours" class="countNum">—</div>
+              <div class="countTxt">Orë</div>
+            </div>
+            <div class="countBox">
+              <div id="cdMins" class="countNum">—</div>
+              <div class="countTxt">Min</div>
+            </div>
+            <div class="countBox">
+              <div id="cdSecs" class="countNum">—</div>
+              <div class="countTxt">Sek</div>
+            </div>
+          </div>
+          <div id="countDone" class="countDone">Sot është dita! 🎉</div>
+        </div>
+
+        <!-- Google Maps preview -->
+        <div class="mapWrap">
+          <div class="mapHead">
+            <p class="mapTitle">Harta (Preview)</p>
+            <a class="mapLink" target="_blank" rel="noopener"
+               href="https://www.google.com/maps/place/Kompleksi+Golden/@41.3069139,19.5588003,17z/data=!3m1!4b1!4m6!3m5!1s0x134fd80ceafef429:0x2a0301532136c787!8m2!3d41.3069139!4d19.5613752!16s%2Fg%2F11c1q7gnfq?entry=ttu">
+              Hap në Google Maps
+            </a>
+          </div>
+
+          <!-- Note: Google may show a consent screen in iframe depending on user/browser -->
+          <iframe
+            class="mapFrame"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            src="https://www.google.com/maps?q=41.3069139,19.5613752&z=17&output=embed"
+            title="Kompleksi Golden - Google Maps">
+          </iframe>
+        </div>
+
+        <p class="subtitle" style="margin-top:16px;">
           Ju ftojmë me shumë kënaqësi të ndani me ne këtë ditë të veçantë.
         </p>
 
@@ -296,7 +464,7 @@
               <a href="https://www.google.com/maps/place/Kompleksi+Golden/@41.3069139,19.5588003,17z/data=!3m1!4b1!4m6!3m5!1s0x134fd80ceafef429:0x2a0301532136c787!8m2!3d41.3069139!4d19.5613752!16s%2Fg%2F11c1q7gnfq?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoASAFQAw%3D%3D"
                  target="_blank" rel="noopener"
                  style="color:rgba(0,0,0,.72);">
-                Hap në Google Maps
+                Navigo në Google Maps
               </a>
             </div>
           </div>
@@ -331,31 +499,35 @@
     const tapLayer = document.getElementById("tapLayer");
     const page = document.getElementById("page");
 
+    const cakeVideo = document.getElementById("cakeVideo");
+
     function showMainPage() {
       intro.style.display = "none";
       page.style.display = "block";
       document.body.style.background = "#0b0b0b";
+
+      // Try autoplay cake video (muted) - may be blocked on some browsers
+      if (cakeVideo) {
+        cakeVideo.muted = true;
+        const p = cakeVideo.play();
+        if (p && typeof p.catch === "function") p.catch(() => {});
+      }
     }
 
-    // ensure no controls
     introVideo.controls = false;
 
-    // user gesture => allow playback (mobile)
     tapLayer.addEventListener("click", async () => {
       try {
         tapLayer.style.display = "none";
         introVideo.muted = false; // unmute after user interaction
         await introVideo.play();
       } catch (e) {
-        // fallback: keep tap layer visible if play fails
         tapLayer.style.display = "grid";
       }
     });
 
-    // if video ends => open main page
     introVideo.addEventListener("ended", showMainPage);
 
-    // Safety: if user taps video directly (some browsers), try to play
     introVideo.addEventListener("click", async () => {
       if (!introVideo.paused) return;
       try {
@@ -364,6 +536,59 @@
         await introVideo.play();
       } catch (e) {}
     });
+
+    // If cake autoplay fails, let user tap it to start/unmute
+    if (cakeVideo) {
+      cakeVideo.addEventListener("click", async () => {
+        try {
+          if (cakeVideo.paused) {
+            cakeVideo.muted = false; // click = user gesture, can unmute
+            await cakeVideo.play();
+          } else {
+            // toggle mute on tap
+            cakeVideo.muted = !cakeVideo.muted;
+          }
+        } catch (e) {}
+      });
+    }
+  </script>
+
+  <script>
+    // === Countdown to wedding date/time (device local time) ===
+    // Wedding: 10 Sep 2026 20:00 local time
+    const target = new Date(2026, 8, 10, 20, 0, 0);
+
+    const cdDays = document.getElementById("cdDays");
+    const cdHours = document.getElementById("cdHours");
+    const cdMins = document.getElementById("cdMins");
+    const cdSecs = document.getElementById("cdSecs");
+    const countGrid = document.getElementById("countGrid");
+    const countDone = document.getElementById("countDone");
+
+    function tick() {
+      const now = new Date();
+      let ms = target - now;
+
+      if (ms <= 0) {
+        if (countGrid) countGrid.style.display = "none";
+        if (countDone) countDone.style.display = "block";
+        return;
+      }
+
+      const totalSec = Math.floor(ms / 1000);
+      const days = Math.floor(totalSec / (24 * 3600));
+      const hours = Math.floor((totalSec % (24 * 3600)) / 3600);
+      const mins = Math.floor((totalSec % 3600) / 60);
+      const secs = totalSec % 60;
+
+      cdDays.textContent = String(days);
+      cdHours.textContent = String(hours).padStart(2, "0");
+      cdMins.textContent = String(mins).padStart(2, "0");
+      cdSecs.textContent = String(secs).padStart(2, "0");
+    }
+
+    tick();
+    setInterval(tick, 1000);
   </script>
 
   <script>
