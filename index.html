@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boda Laura & Javier</title>
+  <title>Invitación de Boda</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,43 +26,43 @@
         linear-gradient(180deg,var(--bg1),var(--bg2));
     }
 
-    /* ===== INTRO VIDEO (NO NATIVE UI) ===== */
-    #intro{
-      position:fixed; inset:0; z-index:9999;
-      background:#000; display:grid; place-items:center;
+    /* ===== INTRO OVERLAY (matches the structure you pasted) ===== */
+    #introOverlay{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      cursor:pointer;
+      background:#000;
       transition: opacity .35s ease, transform .35s ease;
     }
-    #intro.closing{opacity:0; transform:scale(1.01); pointer-events:none;}
-    .intro-card{position:relative; width:100%; height:100%;}
-    #introVideo{
-      width:100%; height:100%;
-      object-fit:cover; background:#000; display:block;
-      /* key: prevent taps reaching the video so Safari doesn't show UI */
+    #introOverlay.closing{
+      opacity:0;
+      transform: scale(1.01);
       pointer-events:none;
     }
+    #introVideo{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background:#000;
+    }
 
-    /* Tap overlay (poster is from video attribute) */
-    .tap-to-play{
-      position:absolute; inset:0;
-      display:flex; align-items:center; justify-content:center;
-      background: transparent;
-      cursor:pointer;
-      z-index:5;
-    }
-    .tap-to-play.hidden{display:none;}
-    .play-dot{
-      width:78px; height:78px; border-radius:999px;
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(8px);
-      display:grid; place-items:center;
-    }
-    .play-tri{
-      width:0; height:0;
-      border-left:18px solid #fff;
-      border-top:12px solid transparent;
-      border-bottom:12px solid transparent;
-      margin-left:4px;
-      opacity:.95;
+    /* Hide Safari/iOS native video UI as much as possible */
+    #introVideo::-webkit-media-controls{ display:none !important; }
+    #introVideo::-webkit-media-controls-enclosure{ display:none !important; }
+    #introVideo::-webkit-media-controls-panel{ display:none !important; }
+    #introVideo::-webkit-media-controls-play-button{ display:none !important; }
+    #introVideo::-webkit-media-controls-start-playback-button{ display:none !important; }
+
+    /* White fade layer (like your pasted code) */
+    #introFade{
+      position:absolute;
+      inset:0;
+      background:#fff;
+      pointer-events:none;
+      opacity:0;
+      transition: opacity .6s ease;
     }
 
     /* ===== MAIN PAGE ===== */
@@ -78,57 +78,79 @@
     }
     .brand{display:flex; flex-direction:column; gap:3px; line-height:1.1;}
     .brand strong{
-      font-family:"Playfair Display", serif; font-weight:500;
-      letter-spacing:.5px; font-size:16px; white-space:nowrap;
+      font-family:"Playfair Display", serif;
+      font-weight:500;
+      letter-spacing:.5px;
+      font-size:16px;
+      white-space:nowrap;
     }
     .brand span{font-size:12px; color:var(--muted);}
+
     nav{display:flex; gap:8px; flex-wrap:wrap}
     nav a{
-      text-decoration:none; font-size:13px; color:var(--muted);
-      padding:8px 10px; border-radius:999px; border:1px solid transparent;
+      text-decoration:none;
+      font-size:13px;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid transparent;
     }
-    nav a:hover{color:var(--ink); border-color:var(--line); background: rgba(255,255,255,.55);}
+    nav a:hover{
+      color:var(--ink);
+      border-color:var(--line);
+      background: rgba(255,255,255,.55);
+    }
     @media (max-width: 860px){ nav{display:none} }
 
     .wrap{max-width:var(--max); margin:0 auto; padding:22px 16px 80px;}
     .hero{
-      margin-top:18px; border:1px solid var(--line);
+      margin-top:18px;
+      border:1px solid var(--line);
       border-radius: calc(var(--radius) + 10px);
-      background: var(--paper); box-shadow: var(--shadow);
+      background: var(--paper);
+      box-shadow: var(--shadow);
       padding: 34px 18px;
     }
-    .kicker{font-size:12px; color:var(--muted); letter-spacing:2.2px; text-transform:uppercase;}
+    .kicker{
+      font-size:12px; color:var(--muted);
+      letter-spacing:2.2px; text-transform:uppercase;
+    }
     h1{
       margin:14px 0 6px;
-      font-family:"Cormorant Garamond", serif; font-weight:400;
-      font-size: clamp(46px, 6vw, 78px); line-height:1.0;
+      font-family:"Cormorant Garamond", serif;
+      font-weight:400;
+      font-size: clamp(46px, 6vw, 78px);
+      line-height:1.0;
     }
-    .sub{margin:0; color:var(--muted); line-height:1.7; max-width:70ch; font-size:15px;}
+    .sub{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+      max-width:70ch;
+      font-size:15px;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- INTRO (tap anywhere to play; no skip; no native controls) -->
-  <section id="intro">
-    <div class="intro-card" id="introCard">
-      <video
-        id="introVideo"
-        playsinline
-        webkit-playsinline
-        preload="auto"
-        poster="poster.jpg"
-        controlslist="nodownload noplaybackrate noremoteplayback"
-        disablepictureinpicture
-      >
-        <source src="intro.mp4" type="video/mp4" />
-      </video>
+  <!-- INTRO OVERLAY (video + fade + skip) -->
+  <div id="introOverlay" aria-label="Intro">
+    <video
+      id="introVideo"
+      poster="poster.jpg"
+      playsinline
+      webkit-playsinline
+      preload="auto"
+      disablepictureinpicture
+    >
+      <source src="intro.mp4" type="video/mp4" />
+    </video>
 
-      <div class="tap-to-play" id="tapToPlay" aria-label="Tap to play">
-        <div class="play-dot"><div class="play-tri"></div></div>
-      </div>
-    </div>
-  </section>
+    <div id="introFade"></div>
+
+    <button id="skipBtn" type="button">Saltar</button>
+  </div>
 
   <!-- MAIN PAGE -->
   <header class="topbar">
@@ -158,28 +180,61 @@
   </main>
 
   <script>
-    const intro = document.getElementById("intro");
+    const overlay = document.getElementById("introOverlay");
     const video = document.getElementById("introVideo");
-    const tap = document.getElementById("tapToPlay");
-    const card = document.getElementById("introCard");
+    const fade = document.getElementById("introFade");
+    const skip = document.getElementById("skipBtn");
 
-    function closeIntro(){
-      intro.classList.add("closing");
-      setTimeout(() => { intro.style.display = "none"; }, 380);
+    function closeIntro(withFade = true){
+      if (withFade){
+        fade.style.opacity = "1";
+        // give it a moment, then close
+        setTimeout(() => {
+          overlay.classList.add("closing");
+          setTimeout(() => overlay.remove(), 380);
+        }, 450);
+      } else {
+        overlay.classList.add("closing");
+        setTimeout(() => overlay.remove(), 380);
+      }
     }
 
-    // Tap anywhere -> play (without native controls)
-    card.addEventListener("click", async () => {
+    // Click overlay -> play
+    overlay.addEventListener("click", async (e) => {
+      // If user clicked the skip button, skip handler will run
+      if (e.target === skip) return;
+
       try{
-        tap.classList.add("hidden");
+        // ensure inline playback
+        video.playsInline = true;
+        // attempt unmuted first; if blocked, fallback to muted
+        video.muted = false;
         await video.play();
-      }catch(e){
-        // If Safari blocks, show the tap overlay again
-        tap.classList.remove("hidden");
+      } catch(err){
+        try{
+          video.muted = true;
+          await video.play();
+        } catch(e2){
+          // if still blocked, do nothing (iOS policy)
+        }
       }
     }, { passive:true });
 
-    video.addEventListener("ended", closeIntro);
+    // When video ends -> close
+    video.addEventListener("ended", () => closeIntro(true));
+
+    // Skip button
+    skip.addEventListener("click", (e) => {
+      e.stopPropagation();
+      try{ video.pause(); }catch{}
+      closeIntro(false);
+    });
+
+    // Optional: if user starts video via native gesture (some browsers), hide skip a bit
+    video.addEventListener("play", () => {
+      // keep it visible but slightly less prominent
+      skip.style.opacity = "0.35";
+    });
   </script>
 
 </body>
