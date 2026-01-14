@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boda Laura & Javier</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg1:#ffffff;
+      --bg2:#faf7f1;
+      --paper:#ffffffcc;
+      --ink:#1c1c1c;
+      --muted: rgba(28,28,28,.62);
+      --line: rgba(28,28,28,.12);
+      --shadow: 0 18px 50px rgba(0,0,0,.10);
+      --radius: 22px;
+      --max: 1020px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 560px at 15% 10%, rgba(154,108,60,.14), transparent 60%),
+        radial-gradient(900px 560px at 85% 25%, rgba(0,0,0,.05), transparent 55%),
+        linear-gradient(180deg,var(--bg1),var(--bg2));
+    }
+
+    /* ===== INTRO VIDEO ===== */
+    #intro{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:grid;
+      place-items:center;
+      background:#000;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    #intro.closing{
+      opacity:0;
+      transform: scale(1.01);
+      pointer-events:none;
+    }
+    .intro-card{
+      position:relative;
+      width:100%;
+      height:100%;
+    }
+    #introVideo{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:#000;
+      display:block;
+    }
+    .intro-skip{
+      position:absolute;
+      right:18px;
+      bottom:18px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.35);
+      background: rgba(0,0,0,.45);
+      color:#fff;
+      cursor:pointer;
+      font-size:13px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      backdrop-filter: blur(8px);
+      z-index:5;
+    }
+    .intro-skip:hover{
+      background: rgba(0,0,0,.65);
+    }
+
+    /* ===== MAIN PAGE ===== */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(250,247,241,.75);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+      line-height:1.1;
+    }
+    .brand strong{
+      font-family:"Playfair Display", serif;
+      font-weight:500;
+      letter-spacing:.5px;
+      font-size:16px;
+      white-space:nowrap;
+    }
+    .brand span{
+      font-size:12px;
+      color:var(--muted);
+    }
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a{
+      text-decoration:none;
+      font-size:13px;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid transparent;
+    }
+    nav a:hover{
+      color:var(--ink);
+      border-color:var(--line);
+      background: rgba(255,255,255,.55);
+    }
+    @media (max-width: 860px){
+      nav{display:none}
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:22px 16px 80px;
+    }
+    .hero{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius: calc(var(--radius) + 10px);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: 34px 18px;
+    }
+    .kicker{
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:2.2px;
+      text-transform:uppercase;
+    }
+    h1{
+      margin:14px 0 6px;
+      font-family:"Cormorant Garamond", serif;
+      font-weight:400;
+      font-size: clamp(46px, 6vw, 78px);
+      line-height:1.0;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+      max-width:70ch;
+      font-size:15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- INTRO VIDEO -->
+  <section id="intro">
+    <div class="intro-card">
+      <video id="introVideo" controls playsinline preload="metadata" poster="poster.jpg">
+        <source src="intro.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <button class="intro-skip" id="skipBtn">SALTAR</button>
+    </div>
+  </section>
+
+  <!-- MAIN PAGE -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <strong>Laura &amp; Javier</strong>
+        <span>18.05.2026 · Masia Can Cortada · Barcelona</span>
+      </div>
+      <nav>
+        <a href="#detalles">Detalles</a>
+        <a href="#rsvp">RSVP</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="detalles">
+      <div class="kicker">Invitación</div>
+      <h1>Laura &amp; Javier</h1>
+      <p class="sub">18 de mayo de 2026 · Masia Can Cortada, Barcelona</p>
+    </section>
+
+    <section class="hero" id="rsvp">
+      <div class="kicker">RSVP</div>
+      <p class="sub">Aquí irá el formulario de confirmación.</p>
+    </section>
+  </main>
+
+  <script>
+    const intro = document.getElementById("intro");
+    const video = document.getElementById("introVideo");
+    const skipBtn = document.getElementById("skipBtn");
+
+    function closeIntro(){
+      intro.classList.add("closing");
+      setTimeout(() => {
+        intro.style.display = "none";
+      }, 380);
+    }
+
+    // Kur video mbaron → hap faqen
+    video.addEventListener("ended", closeIntro);
+
+    // Skip manual
+    skipBtn.addEventListener("click", () => {
+      try { video.pause(); } catch {}
+      closeIntro();
+    });
+
+    // ESC për skip
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        try { video.pause(); } catch {}
+        closeIntro();
+      }
+    });
+  </script>
+
+</body>
+</html>
