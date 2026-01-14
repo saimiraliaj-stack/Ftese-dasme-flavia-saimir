@@ -1,239 +1,143 @@
 <!doctype html>
-<html lang="es">
+<html lang="sq">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invitación de Boda</title>
+  <title>Flavia & Saimir</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg1:#ffffff; --bg2:#faf7f1; --paper:#ffffffcc; --ink:#1c1c1c;
-      --muted: rgba(28,28,28,.62); --line: rgba(28,28,28,.12);
-      --shadow: 0 18px 50px rgba(0,0,0,.10); --radius: 22px; --max: 1020px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; color:var(--ink);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(900px 560px at 15% 10%, rgba(154,108,60,.14), transparent 60%),
-        radial-gradient(900px 560px at 85% 25%, rgba(0,0,0,.05), transparent 55%),
-        linear-gradient(180deg,var(--bg1),var(--bg2));
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: linear-gradient(180deg, #ffffff, #f6f2ea);
+      color: #1c1c1c;
     }
 
-    /* ===== INTRO OVERLAY (matches the structure you pasted) ===== */
-    #introOverlay{
-      position:fixed;
-      inset:0;
-      z-index:9999;
-      cursor:pointer;
-      background:#000;
-      transition: opacity .35s ease, transform .35s ease;
-    }
-    #introOverlay.closing{
-      opacity:0;
-      transform: scale(1.01);
-      pointer-events:none;
-    }
-    #introVideo{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      background:#000;
+    /* ===== INTRO VIDEO OVERLAY ===== */
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #000;
+      cursor: pointer;
+      transition: opacity .4s ease;
     }
 
-    /* Hide Safari/iOS native video UI as much as possible */
-    #introVideo::-webkit-media-controls{ display:none !important; }
-    #introVideo::-webkit-media-controls-enclosure{ display:none !important; }
-    #introVideo::-webkit-media-controls-panel{ display:none !important; }
-    #introVideo::-webkit-media-controls-play-button{ display:none !important; }
-    #introVideo::-webkit-media-controls-start-playback-button{ display:none !important; }
-
-    /* White fade layer (like your pasted code) */
-    #introFade{
-      position:absolute;
-      inset:0;
-      background:#fff;
-      pointer-events:none;
-      opacity:0;
-      transition: opacity .6s ease;
+    #intro.hide {
+      opacity: 0;
+      pointer-events: none;
     }
 
-    /* ===== MAIN PAGE ===== */
-    .topbar{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(250,247,241,.75);
-      border-bottom:1px solid var(--line);
+    #intro video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #000;
     }
-    .topbar-inner{
-      max-width:var(--max); margin:0 auto; padding:12px 16px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    .brand{display:flex; flex-direction:column; gap:3px; line-height:1.1;}
-    .brand strong{
-      font-family:"Playfair Display", serif;
-      font-weight:500;
-      letter-spacing:.5px;
-      font-size:16px;
-      white-space:nowrap;
-    }
-    .brand span{font-size:12px; color:var(--muted);}
 
-    nav{display:flex; gap:8px; flex-wrap:wrap}
-    nav a{
-      text-decoration:none;
-      font-size:13px;
-      color:var(--muted);
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid transparent;
+    /* FSHIH UI-n e SAFARI */
+    video::-webkit-media-controls,
+    video::-webkit-media-controls-start-playback-button,
+    video::-webkit-media-controls-play-button {
+      display: none !important;
     }
-    nav a:hover{
-      color:var(--ink);
-      border-color:var(--line);
-      background: rgba(255,255,255,.55);
-    }
-    @media (max-width: 860px){ nav{display:none} }
 
-    .wrap{max-width:var(--max); margin:0 auto; padding:22px 16px 80px;}
-    .hero{
-      margin-top:18px;
-      border:1px solid var(--line);
-      border-radius: calc(var(--radius) + 10px);
-      background: var(--paper);
-      box-shadow: var(--shadow);
-      padding: 34px 18px;
+    /* ===== MAIN CONTENT ===== */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 20px;
+      text-align: center;
     }
-    .kicker{
-      font-size:12px; color:var(--muted);
-      letter-spacing:2.2px; text-transform:uppercase;
+
+    h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 64px;
+      font-weight: 400;
+      margin-bottom: 16px;
     }
-    h1{
-      margin:14px 0 6px;
-      font-family:"Cormorant Garamond", serif;
-      font-weight:400;
-      font-size: clamp(46px, 6vw, 78px);
-      line-height:1.0;
+
+    .subtitle {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 40px;
     }
-    .sub{
-      margin:0;
-      color:var(--muted);
-      line-height:1.7;
-      max-width:70ch;
-      font-size:15px;
+
+    .block {
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    a {
+      color: #1c1c1c;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 46px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- INTRO OVERLAY (video + fade + skip) -->
-  <div id="introOverlay" aria-label="Intro">
-    <video
-      id="introVideo"
-      poster="poster.jpg"
-      playsinline
-      webkit-playsinline
-      preload="auto"
-      disablepictureinpicture
-    >
-      <source src="intro.mp4" type="video/mp4" />
+  <!-- INTRO VIDEO -->
+  <div id="intro">
+    <video id="introVideo" poster="poster.jpg" playsinline preload="auto">
+      <source src="intro.mp4" type="video/mp4">
     </video>
-
-    <div id="introFade"></div>
-
-    <button id="skipBtn" type="button">Saltar</button>
   </div>
 
   <!-- MAIN PAGE -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <strong>Laura &amp; Javier</strong>
-        <span>18.05.2026 · Masia Can Cortada · Barcelona</span>
-      </div>
-      <nav>
-        <a href="#detalles">Detalles</a>
-        <a href="#rsvp">RSVP</a>
-      </nav>
+  <main>
+    <h1>Flavia &amp; Saimir</h1>
+
+    <p class="subtitle">
+      Me kënaqësi ju ftojmë të ndani me ne ditën më të veçantë të jetës sonë.
+    </p>
+
+    <div class="block">
+      <strong>Data:</strong> 10 Shtator 2026<br>
+      <strong>Ora:</strong> 20:00 – Mirëseardhja me koktej
     </div>
-  </header>
 
-  <main class="wrap">
-    <section class="hero" id="detalles">
-      <div class="kicker">Invitación</div>
-      <h1>Laura &amp; Javier</h1>
-      <p class="sub">18 de mayo de 2026 · Masia Can Cortada, Barcelona</p>
-    </section>
+    <div class="block">
+      <strong>Vendndodhja:</strong><br>
+      Kompleksi Golden, Tiranë<br>
+      <a href="https://www.google.com/maps/place/Kompleksi+Golden/@41.3069139,19.5588003,17z/data=!3m1!4b1!4m6!3m5!1s0x134fd80ceafef429:0x2a0301532136c787!8m2!3d41.3069139!4d19.5613752!16s%2Fg%2F11c1q7gnfq"
+         target="_blank">
+        Hap vendndodhjen në Google Maps
+      </a>
+    </div>
 
-    <section class="hero" id="rsvp">
-      <div class="kicker">RSVP</div>
-      <p class="sub">Aquí irá el formulario de confirmación.</p>
-    </section>
+    <div class="block">
+      Me dashuri,<br>
+      <strong>Flavia &amp; Saimir</strong>
+    </div>
   </main>
 
   <script>
-    const overlay = document.getElementById("introOverlay");
+    const intro = document.getElementById("intro");
     const video = document.getElementById("introVideo");
-    const fade = document.getElementById("introFade");
-    const skip = document.getElementById("skipBtn");
 
-    function closeIntro(withFade = true){
-      if (withFade){
-        fade.style.opacity = "1";
-        // give it a moment, then close
-        setTimeout(() => {
-          overlay.classList.add("closing");
-          setTimeout(() => overlay.remove(), 380);
-        }, 450);
-      } else {
-        overlay.classList.add("closing");
-        setTimeout(() => overlay.remove(), 380);
-      }
-    }
-
-    // Click overlay -> play
-    overlay.addEventListener("click", async (e) => {
-      // If user clicked the skip button, skip handler will run
-      if (e.target === skip) return;
-
-      try{
-        // ensure inline playback
+    intro.addEventListener("click", async () => {
+      try {
         video.playsInline = true;
-        // attempt unmuted first; if blocked, fallback to muted
-        video.muted = false;
+        video.muted = true;
         await video.play();
-      } catch(err){
-        try{
-          video.muted = true;
-          await video.play();
-        } catch(e2){
-          // if still blocked, do nothing (iOS policy)
-        }
-      }
-    }, { passive:true });
-
-    // When video ends -> close
-    video.addEventListener("ended", () => closeIntro(true));
-
-    // Skip button
-    skip.addEventListener("click", (e) => {
-      e.stopPropagation();
-      try{ video.pause(); }catch{}
-      closeIntro(false);
+      } catch (e) {}
     });
 
-    // Optional: if user starts video via native gesture (some browsers), hide skip a bit
-    video.addEventListener("play", () => {
-      // keep it visible but slightly less prominent
-      skip.style.opacity = "0.35";
+    video.addEventListener("ended", () => {
+      intro.classList.add("hide");
+      setTimeout(() => intro.remove(), 500);
     });
   </script>
 
