@@ -36,6 +36,18 @@
       overflow-x:hidden;
     }
 
+    /* ===== WHITE FADE TRANSITION OVERLAY ===== */
+    .fadeWhite{
+      position:fixed;
+      inset:0;
+      z-index:10000; /* above intro (9999) */
+      background:#fff;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity 800ms ease;
+    }
+    .fadeWhite.show{ opacity:1; }
+
     /* ===== INTRO OVERLAY (envelope video) ===== */
     .intro{
       position:fixed;
@@ -209,7 +221,7 @@
       color: rgba(34,34,34,.92);
     }
 
-    /* ===== COUNTDOWN (like screenshot: big numbers, no boxes) ===== */
+    /* ===== COUNTDOWN (big numbers, no boxes) ===== */
     .countRow{
       display:grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -293,7 +305,7 @@
       max-width: 680px;
     }
 
-    /* ===== MAP CARD (like screenshot: map + buttons) ===== */
+    /* ===== MAP CARD ===== */
     .mapFrame{
       width:100%;
       height: 320px;
@@ -345,6 +357,9 @@
 </head>
 
 <body>
+
+  <!-- WHITE FADE OVERLAY -->
+  <div id="fadeWhite" class="fadeWhite" aria-hidden="true"></div>
 
   <!-- INTRO VIDEO -->
   <div id="intro" class="intro">
@@ -461,7 +476,6 @@
               </div>
             </div>
 
-
             <div class="footerNote">
               Ju lutemi, na ktheni përgjigje me mesazh brenda datës 20 gusht 2026, nëse do të merrni pjesë ose jo.
             </div>
@@ -491,23 +505,41 @@
   </div>
 
   <script>
-    // ===== Intro video flow =====
+    // ===== Intro video flow + white fade transition =====
     const intro = document.getElementById("intro");
     const introVideo = document.getElementById("introVideo");
     const tapLayer = document.getElementById("tapLayer");
     const page = document.getElementById("page");
     const cakeVideo = document.getElementById("cakeVideo");
+    const fadeWhite = document.getElementById("fadeWhite");
+
+    let transitioned = false;
+
+    function playCakeIfPossible() {
+      if (!cakeVideo) return;
+      cakeVideo.muted = true;
+      const p = cakeVideo.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    }
 
     function showMainPage() {
-      intro.style.display = "none";
-      page.style.display = "block";
+      if (transitioned) return;
+      transitioned = true;
 
-      // try autoplay cake video (muted). iOS may block sometimes.
-      if (cakeVideo) {
-        cakeVideo.muted = true;
-        const p = cakeVideo.play();
-        if (p && typeof p.catch === "function") p.catch(() => {});
-      }
+      // Fade to white
+      fadeWhite.classList.add("show");
+
+      // While fully white, switch screens, then fade out to reveal page
+      setTimeout(() => {
+        intro.style.display = "none";
+        page.style.display = "block";
+        playCakeIfPossible();
+
+        requestAnimationFrame(() => {
+          // Fade from white to the page
+          fadeWhite.classList.remove("show");
+        });
+      }, 500);
     }
 
     introVideo.controls = false;
