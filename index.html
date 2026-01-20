@@ -9,12 +9,12 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root{
-      --bg: #f6f1eb;            /* lovable-ish cream */
-      --bg2:#fbf8f4;            /* lighter cream */
+      --bg: #f6f1eb;
+      --bg2:#fbf8f4;
       --ink:#222;
       --muted: rgba(34,34,34,.55);
       --line: rgba(34,34,34,.12);
@@ -40,7 +40,7 @@
     .fadeWhite{
       position:fixed;
       inset:0;
-      z-index:10000; /* above intro (9999) */
+      z-index:10000;
       background:#fff;
       opacity:0;
       pointer-events:none;
@@ -85,14 +85,15 @@
       bottom:26px;
       left:50%;
       transform:translateX(-50%);
-      background: rgba(255,255,255,.88);
-      color: rgba(0,0,0,.75);
+      background: rgba(255,255,255,.90);
+      color: rgba(0,0,0,.78);
       padding:10px 14px;
       border-radius:999px;
       font-size:12px;
       letter-spacing:.14em;
       text-transform:uppercase;
       backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.14);
     }
 
     /* ===== PAGE ===== */
@@ -104,7 +105,7 @@
       padding: 0 18px;
     }
 
-    /* top nav anchor (like "CONFIRMA ASISTENCIA") */
+    /* top nav anchor */
     .topNav{
       position: sticky;
       top: 0;
@@ -131,33 +132,82 @@
     /* ===== HERO ===== */
     .hero{
       background: var(--bg);
-      padding: 52px 0 22px 0;
+      padding: 54px 0 22px 0;
       text-align:center;
+      position: relative;
     }
+
+    /* subtle romantic glow */
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-120px -60px auto -60px;
+      height: 260px;
+      background: radial-gradient(closest-side, rgba(255,255,255,.75), rgba(255,255,255,0));
+      pointer-events:none;
+      filter: blur(1px);
+      opacity:.9;
+    }
+
     .heroKicker{
       font-size: 12px;
       letter-spacing: .28em;
       text-transform: uppercase;
       color: rgba(34,34,34,.45);
       margin: 0 0 10px 0;
+      position: relative;
+      z-index: 1;
     }
+
     .heroTitle{
       font-family: var(--serif);
       font-weight: 500;
-      font-size: clamp(44px, 7vw, 72px);
+      font-style: italic;              /* pjerrtas */
+      font-size: clamp(44px, 7vw, 76px);
       line-height: 1.02;
       margin: 0;
       color: rgba(34,34,34,.92);
+      position: relative;
+      z-index: 1;
+      text-rendering: geometricPrecision;
+      letter-spacing: .01em;
+      text-shadow: 0 10px 26px rgba(0,0,0,.10); /* brilante */
     }
+
+    .heroSub{
+      font-family: var(--serif);
+      font-style: italic;              /* pjerrtas */
+      font-weight: 500;
+      font-size: clamp(18px, 2.6vw, 24px);
+      color: rgba(34,34,34,.78);
+      margin: 10px 0 0 0;
+      position: relative;
+      z-index: 1;
+    }
+
     .heroDate{
       font-size: 12px;
       letter-spacing: .22em;
       text-transform: uppercase;
       color: rgba(34,34,34,.45);
-      margin: 14px 0 22px 0;
+      margin: 14px 0 18px 0;
+      position: relative;
+      z-index: 1;
     }
 
-    /* cake “illustration-style” block */
+    .heroQuote{
+      margin: 0 auto 22px auto;
+      max-width: 680px;
+      font-family: var(--serif);
+      font-style: italic;              /* pjerrtas */
+      font-size: clamp(18px, 2.8vw, 24px);
+      line-height: 1.65;
+      color: rgba(34,34,34,.74);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* cake block */
     .cakeFrame{
       width: min(520px, 100%);
       margin: 0 auto;
@@ -166,20 +216,15 @@
       border: 1px solid rgba(34,34,34,.08);
       box-shadow: 0 12px 30px rgba(0,0,0,.08);
       overflow:hidden;
+      position: relative;
+      z-index: 1;
     }
     .cakeVideo{
       width:100%;
       display:block;
-      aspect-ratio: 3 / 4;   /* looks like the tall illustration */
+      aspect-ratio: 3 / 4;
       object-fit: cover;
       background:#000;
-    }
-
-    .heroHint{
-      margin-top: 14px;
-      font-size: 12px;
-      color: rgba(34,34,34,.50);
-      letter-spacing: .08em;
     }
 
     .scrollCue{
@@ -192,10 +237,12 @@
       border: 1px solid rgba(34,34,34,.10);
       background: rgba(255,255,255,.35);
       cursor:pointer;
+      position: relative;
+      z-index: 1;
     }
     .scrollCue svg{ opacity:.55; }
 
-    /* ===== SECTION TITLES (Lovable-ish) ===== */
+    /* ===== SECTION TITLES ===== */
     .section{
       padding: 56px 0;
     }
@@ -216,12 +263,24 @@
       text-align:center;
       font-family: var(--serif);
       font-weight: 500;
-      font-size: clamp(30px, 5vw, 46px);
-      margin: 0 0 24px 0;
+      font-style: italic;              /* pjerrtas */
+      font-size: clamp(30px, 5vw, 48px);
+      margin: 0 0 18px 0;
       color: rgba(34,34,34,.92);
+      text-shadow: 0 10px 26px rgba(0,0,0,.08); /* brilante */
+    }
+    .sectionLead{
+      text-align:center;
+      max-width: 680px;
+      margin: 0 auto 22px auto;
+      font-family: var(--serif);
+      font-style: italic;              /* pjerrtas */
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(34,34,34,.70);
     }
 
-    /* ===== COUNTDOWN (big numbers, no boxes) ===== */
+    /* ===== COUNTDOWN ===== */
     .countRow{
       display:grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -233,9 +292,11 @@
     .countNum{
       font-family: var(--serif);
       font-weight: 500;
+      font-style: italic;              /* pjerrtas */
       font-size: clamp(40px, 6vw, 56px);
       line-height: 1;
       color: rgba(34,34,34,.90);
+      text-shadow: 0 10px 26px rgba(0,0,0,.08);
     }
     .countLbl{
       margin-top: 10px;
@@ -265,12 +326,6 @@
     }
     .cardPad{ padding: 26px 20px; }
 
-    .line{
-      height:1px;
-      background: rgba(34,34,34,.08);
-      margin: 18px 0;
-    }
-
     .rows{
       display:grid;
       gap: 14px;
@@ -291,18 +346,13 @@
     }
     .rowVal{
       font-size: 15px;
-      line-height: 1.45;
+      line-height: 1.55;
       color: rgba(34,34,34,.86);
     }
-
-    .quote{
-      text-align:center;
+    .rowVal em{
       font-family: var(--serif);
-      font-size: clamp(20px, 3.2vw, 28px);
-      line-height: 1.5;
-      color: rgba(34,34,34,.86);
-      margin: 22px auto 0 auto;
-      max-width: 680px;
+      font-style: italic;
+      color: rgba(34,34,34,.78);
     }
 
     /* ===== MAP CARD ===== */
@@ -342,8 +392,11 @@
 
     .footerNote{
       text-align:center;
-      font-size: 12px;
-      color: rgba(34,34,34,.55);
+      font-family: var(--serif);
+      font-style: italic;              /* pjerrtas */
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(34,34,34,.66);
       margin-top: 16px;
     }
 
@@ -351,7 +404,8 @@
       .countRow{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
       .mapFrame{ height: 280px; }
       .section{ padding: 48px 0; }
-      .hero{ padding: 44px 0 18px 0; }
+      .hero{ padding: 46px 0 18px 0; }
+      .heroQuote{ margin-bottom: 18px; }
     }
   </style>
 </head>
@@ -375,7 +429,7 @@
     ></video>
 
     <div id="tapLayer" class="tapLayer" aria-label="Luaj videon">
-      <div class="tapHint">Prek për të vazhduar</div>
+      <div class="tapHint">Prek për të hapur ftesën</div>
     </div>
   </div>
 
@@ -391,9 +445,17 @@
     <!-- HERO -->
     <section class="hero" id="top">
       <div class="container">
-        <p class="heroKicker">Ftesë Dasme</p>
+        <p class="heroKicker">Ftesë dasme</p>
+
         <h1 class="heroTitle">Flavia &amp; Saimir</h1>
-        <p class="heroDate">10 Shtator 2026</p>
+        <p class="heroSub">Me zemër plot, ju ftojmë të ndani me ne gëzimin</p>
+
+        <p class="heroDate">10 Shtator 2026 • Ora 20:00</p>
+
+        <p class="heroQuote">
+          “Dashuria na solli deri këtu — dhe tani, me familjen e miqtë tanë më të dashur,
+          duam ta festojmë këtë fillim të ri së bashku.”
+        </p>
 
         <div class="cakeFrame">
           <video
@@ -419,7 +481,10 @@
     <section class="section alt" id="countdown">
       <div class="container">
         <p class="sectionKicker">Numërim mbrapsht</p>
-        <h2 class="sectionTitle">Deri në ditën tonë më të veçantë</h2>
+        <h2 class="sectionTitle">Deri te momenti ynë i paharrueshëm</h2>
+        <p class="sectionLead">
+          Çdo ditë na afron më shumë me mbrëmjen ku do të bashkojmë jetët tona në një “po”.
+        </p>
 
         <div id="countRow" class="countRow">
           <div>
@@ -440,33 +505,36 @@
           </div>
         </div>
 
-        <div id="countDone" class="countDone">Sot është dita! 🎉</div>
+        <div id="countDone" class="countDone">Sot është dita jonë! ✨</div>
       </div>
     </section>
 
     <!-- DETAILS + MAP -->
     <section class="section" id="detajet">
       <div class="container">
-        <p class="sectionKicker">Detajet e ditës</p>
-        <h2 class="sectionTitle">Gjithçka që duhet të dini</h2>
+        <p class="sectionKicker">Detajet e mbrëmjes</p>
+        <h2 class="sectionTitle">Me dashuri, ju presim</h2>
+        <p class="sectionLead">
+          Një mbrëmje e ngrohtë, me muzikë, buzëqeshje dhe njerëzit tanë të zemrës.
+        </p>
 
         <div class="card">
           <div class="cardPad">
             <div class="rows">
               <div class="row">
                 <div class="rowLbl">Data</div>
-                <div class="rowVal">E Enjte, 10 Shtator 2026</div>
+                <div class="rowVal"><em>E enjte</em>, 10 Shtator 2026</div>
               </div>
 
               <div class="row">
                 <div class="rowLbl">Ora</div>
-                <div class="rowVal">Nisja në orën 20:00</div>
+                <div class="rowVal">Fillimi i pritjes: <em>20:00</em></div>
               </div>
 
               <div class="row">
                 <div class="rowLbl">Vendndodhja</div>
                 <div class="rowVal">
-                  Kompleksi Golden, Tiranë<br />
+                  <em>Kompleksi Golden</em>, Tiranë<br />
                   <a href="https://www.google.com/maps/place/Kompleksi+Golden/@41.3069139,19.5588003,17z/data=!3m1!4b1!4m6!3m5!1s0x134fd80ceafef429:0x2a0301532136c787!8m2!3d41.3069139!4d19.5613752!16s%2Fg%2F11c1q7gnfq?entry=ttu"
                      target="_blank" rel="noopener"
                      style="color:rgba(34,34,34,.75);text-decoration:underline;">
@@ -477,7 +545,8 @@
             </div>
 
             <div class="footerNote">
-              Ju lutemi, na ktheni përgjigje me mesazh brenda datës 20 gusht 2026, nëse do të merrni pjesë ose jo.
+              Ju lutemi, na ktheni një përgjigje me mesazh deri më <em>20 gusht 2026</em>,
+              për të konfirmuar pjesëmarrjen tuaj. Prania juaj do ta bëjë mbrëmjen edhe më të bukur.
             </div>
           </div>
 
@@ -526,17 +595,14 @@
       if (transitioned) return;
       transitioned = true;
 
-      // Fade to white
       fadeWhite.classList.add("show");
 
-      // While fully white, switch screens, then fade out to reveal page
       setTimeout(() => {
         intro.style.display = "none";
         page.style.display = "block";
         playCakeIfPossible();
 
         requestAnimationFrame(() => {
-          // Fade from white to the page
           fadeWhite.classList.remove("show");
         });
       }, 500);
@@ -601,7 +667,7 @@
 
     function tick() {
       const now = new Date();
-      let ms = target - now;
+      const ms = target - now;
 
       if (ms <= 0) {
         if (countRow) countRow.style.display = "none";
@@ -653,9 +719,11 @@
       const maps = "https://www.google.com/maps/place/Kompleksi+Golden/@41.3069139,19.5588003,17z";
 
       const description = [
-        "Mirëseardhja me koktej: 20:00",
+        "Pritja fillon: 20:00",
         "Vendndodhja: Kompleksi Golden, Tiranë",
-        "Google Maps: " + maps
+        "Google Maps: " + maps,
+        "",
+        "Na gëzon praninë tuaj. Ju lutemi konfirmoni deri më 20 gusht 2026."
       ].join("\\n");
 
       const ics =
