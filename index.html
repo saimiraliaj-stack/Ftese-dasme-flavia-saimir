@@ -9,7 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root{
@@ -162,7 +162,7 @@
     .heroTitle{
       font-family: var(--serif);
       font-weight: 500;
-      font-style: italic;              /* pjerrtas */
+      font-style: italic;
       font-size: clamp(44px, 7vw, 76px);
       line-height: 1.02;
       margin: 0;
@@ -171,12 +171,12 @@
       z-index: 1;
       text-rendering: geometricPrecision;
       letter-spacing: .01em;
-      text-shadow: 0 10px 26px rgba(0,0,0,.10); /* brilante */
+      text-shadow: 0 10px 26px rgba(0,0,0,.10);
     }
 
     .heroSub{
       font-family: var(--serif);
-      font-style: italic;              /* pjerrtas */
+      font-style: italic;
       font-weight: 500;
       font-size: clamp(18px, 2.6vw, 24px);
       color: rgba(34,34,34,.78);
@@ -199,7 +199,7 @@
       margin: 0 auto 22px auto;
       max-width: 680px;
       font-family: var(--serif);
-      font-style: italic;              /* pjerrtas */
+      font-style: italic;
       font-size: clamp(18px, 2.8vw, 24px);
       line-height: 1.65;
       color: rgba(34,34,34,.74);
@@ -263,18 +263,18 @@
       text-align:center;
       font-family: var(--serif);
       font-weight: 500;
-      font-style: italic;              /* pjerrtas */
+      font-style: italic;
       font-size: clamp(30px, 5vw, 48px);
       margin: 0 0 18px 0;
       color: rgba(34,34,34,.92);
-      text-shadow: 0 10px 26px rgba(0,0,0,.08); /* brilante */
+      text-shadow: 0 10px 26px rgba(0,0,0,.08);
     }
     .sectionLead{
       text-align:center;
       max-width: 680px;
       margin: 0 auto 22px auto;
       font-family: var(--serif);
-      font-style: italic;              /* pjerrtas */
+      font-style: italic;
       font-size: 18px;
       line-height: 1.7;
       color: rgba(34,34,34,.70);
@@ -292,7 +292,7 @@
     .countNum{
       font-family: var(--serif);
       font-weight: 500;
-      font-style: italic;              /* pjerrtas */
+      font-style: italic;
       font-size: clamp(40px, 6vw, 56px);
       line-height: 1;
       color: rgba(34,34,34,.90);
@@ -393,7 +393,7 @@
     .footerNote{
       text-align:center;
       font-family: var(--serif);
-      font-style: italic;              /* pjerrtas */
+      font-style: italic;
       font-size: 15px;
       line-height: 1.65;
       color: rgba(34,34,34,.66);
@@ -411,6 +411,9 @@
 </head>
 
 <body>
+
+  <!-- ✅ ADDED: Background music (starts after user interaction) -->
+  <audio id="bgMusic" src="Wedding-March.mp3" preload="auto" loop></audio>
 
   <!-- WHITE FADE OVERLAY -->
   <div id="fadeWhite" class="fadeWhite" aria-hidden="true"></div>
@@ -582,7 +585,22 @@
     const cakeVideo = document.getElementById("cakeVideo");
     const fadeWhite = document.getElementById("fadeWhite");
 
+    // ✅ ADDED: background music handle
+    const bgMusic = document.getElementById("bgMusic");
+
     let transitioned = false;
+    let musicStarted = false;
+
+    function startMusicIfPossible() {
+      if (!bgMusic || musicStarted) return;
+      musicStarted = true;
+      bgMusic.volume = 0.35;
+      const p = bgMusic.play();
+      if (p && typeof p.catch === "function") p.catch(() => { musicStarted = false; });
+    }
+
+    // Start music on first user interaction (required on iOS/Android)
+    document.addEventListener("click", startMusicIfPossible, { once: true });
 
     function playCakeIfPossible() {
       if (!cakeVideo) return;
@@ -601,6 +619,7 @@
         intro.style.display = "none";
         page.style.display = "block";
         playCakeIfPossible();
+        startMusicIfPossible();
 
         requestAnimationFrame(() => {
           fadeWhite.classList.remove("show");
@@ -614,6 +633,7 @@
       try {
         tapLayer.style.display = "none";
         introVideo.muted = false;
+        startMusicIfPossible();
         await introVideo.play();
       } catch (e) {
         tapLayer.style.display = "grid";
@@ -627,6 +647,7 @@
       try {
         tapLayer.style.display = "none";
         introVideo.muted = false;
+        startMusicIfPossible();
         await introVideo.play();
       } catch (e) {}
     });
@@ -705,9 +726,8 @@
     document.getElementById("addToCalendar").addEventListener("click", (e) => {
       e.preventDefault();
 
-      // 10 Sep 2026 20:00 local time
       const startLocal = new Date(2026, 8, 10, 20, 0, 0);
-      const endLocal   = new Date(2026, 8, 11, 0, 0, 0); // +4h
+      const endLocal   = new Date(2026, 8, 11, 0, 0, 0);
 
       const uid = `flavia-saimir-${Date.now()}@github-pages`;
       const dtstamp = toUTCICS(new Date());
